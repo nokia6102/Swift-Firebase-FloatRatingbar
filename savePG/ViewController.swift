@@ -11,27 +11,66 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtOutput: UITextView!
   
     var  ref  : DatabaseReference!
-
+    var output = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-         ref = Database.database().reference(fromURL: "https://myfirebase-c064c.firebaseio.com/")
+         ref = Database.database().reference(fromURL: "https://myfirebase-c064c.firebaseio.com/").child("test")
+        obsRead1()
+//         obsReadData()
+//          obsAddData()
         
-         obsData()
  
-        
     }
  
-    func obsChangeData()
+    func obsRead1()
     {
-        ref.observe(DataEventType.childChanged, with: { (sanpshot) in
-            let allJSON = sanpshot.value   as!  [ String : Any]
+        
+        ref.observe(.value, with: { (snapshot) in
+            for child in snapshot.children {
+                let Value:DataSnapshot = child as! DataSnapshot
+                print ( "> \(Value.value!)" )
+                let  myValue = Value.value!
+                if let dictionary  = myValue as? [String : Any]
+                {
+                    
+                    if let description = dictionary["Description"] as? String
+                    {   self.output.append(description)
+                        self.output.append("\n")
+                        print("1.Description: \(description)")
+                    }
+                    if let stars = dictionary["stars"] as? Float
+                    {
+                        print("2.stars: \(stars)")
+                        self.output.append(String(stars))
+                        self.output.append("\n")
+                    }
+                    self.txtOutput.text = self.output
+                }
+
+            }
+        })
+    }
+    func obsReadData()
+    {
+        ref.observe(.value, with: { (snapshot) in
+  
+ 
+            
+            let allJSON = snapshot.value    as!  [ String : Any]
+
             print ("\(allJSON)")
             
             var output = ""
+            
+        print ("snap child: \(snapshot.childrenCount)")
+            
             for (key ,myValue) in allJSON
+            
             {
+                
+                
                 
                 print ("--\(key)--")
                 output.append("id:\(key)")
@@ -54,13 +93,13 @@ class ViewController: UIViewController {
                     }
                     self.txtOutput.text = output
                 }
-                print ("-------")
+                print ("---88888---")
                 
             }
         })
 
     }
-    func obsData()
+    func obsAddData()
     {
         ref.observe(DataEventType.childAdded, with: { (sanpshot) in
             let allJSON = sanpshot.value   as!  [ String : Any]
@@ -108,7 +147,7 @@ class ViewController: UIViewController {
 
     @IBAction func btnSaveDictionary(_ sender: UIButton)
     {
-        obsChangeData()
+//        obsChangeData()
         
         ref = Database.database().reference(fromURL: "https://myfirebase-c064c.firebaseio.com/").child("test").childByAutoId()
         let postInfo = ["Description": txtInput.text!, "ImageUrl": "test", "stars": 2.5] as [String : Any]
