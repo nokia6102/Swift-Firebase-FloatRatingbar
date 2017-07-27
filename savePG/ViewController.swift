@@ -4,22 +4,49 @@ import UIKit
 import Firebase
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,FloatRatingViewDelegate {
  
+    @IBOutlet weak var floatRatingView: FloatRatingView!
     @IBOutlet weak var labelMyText: UILabel!
     @IBOutlet weak var txtInput: UITextView!
     @IBOutlet weak var txtOutput: UITextView!
   
+    @IBOutlet weak var liveLabel: UILabel!
+    @IBOutlet weak var updateLabel: UILabel!
+    var floatStars : Float = 0.0
     var  ref  : DatabaseReference!
     var output = ""
+    var count = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
          ref = Database.database().reference(fromURL: "https://myfirebase-c064c.firebaseio.com/").child("test")
         obsRead1()
-//         obsReadData()
-//          obsAddData()
+        
+        /** Note: With the exception of contentMode, all of these
+         properties can be set directly in Interface builder **/
+        
+        // Required float rating view params
+        self.floatRatingView.emptyImage = UIImage(named: "StarEmpty")
+        self.floatRatingView.fullImage = UIImage(named: "StarFull")
+        // Optional params
+        self.floatRatingView.delegate = self
+        self.floatRatingView.contentMode = UIViewContentMode.scaleAspectFit
+        self.floatRatingView.maxRating = 5
+//        self.floatRatingView.minRating = 1
+//        self.floatRatingView.rating = 2.5
+//        self.floatRatingView.editable = true
+//        self.floatRatingView.halfRatings = true
+//        self.floatRatingView.floatRatings = false
+        
+//        // Segmented control init
+//        self.ratingSegmentedControl.selectedSegmentIndex = 1
+        
+        // Labels init
+        self.liveLabel.text = NSString(format: "%.2f", self.floatRatingView.rating) as String
+        self.updateLabel.text = NSString(format: "%.2f", self.floatRatingView.rating) as String
+
         
  
     }
@@ -28,6 +55,14 @@ class ViewController: UIViewController {
     {
         
         ref.observe(.value, with: { (snapshot) in
+            
+            (self.count >= 2) ? (self.count = 0) : (self.count += 1)
+            if self.count == 0
+            {
+                self.output.removeAll()
+            }
+
+            
             for child in snapshot.children {
                 let Value:DataSnapshot = child as! DataSnapshot
                 print ( "> \(Value.value!)" )
@@ -150,7 +185,7 @@ class ViewController: UIViewController {
 //        obsChangeData()
         
         ref = Database.database().reference(fromURL: "https://myfirebase-c064c.firebaseio.com/").child("test").childByAutoId()
-        let postInfo = ["Description": txtInput.text!, "ImageUrl": "test", "stars": 2.5] as [String : Any]
+        let postInfo = ["Description": txtInput.text!, "ImageUrl": "test", "stars": floatStars ] as [String : Any]
         
         
         ref.setValue(postInfo)
@@ -158,10 +193,17 @@ class ViewController: UIViewController {
         let childautoID = ref.key
         print(childautoID)
         labelMyText.text = childautoID
-      
-        
-
-
+    }
+    
+    // MARK: FloatRatingViewDelegate
+    
+    func floatRatingView(_ ratingView: FloatRatingView, isUpdating rating:Float) {
+        self.liveLabel.text = NSString(format: "%.2f", self.floatRatingView.rating) as String
+    }
+    
+    func floatRatingView(_ ratingView: FloatRatingView, didUpdate rating: Float) {
+        floatStars = self.floatRatingView.rating
+        self.updateLabel.text = NSString(format: "%.2f", self.floatRatingView.rating) as String
     }
 
 }

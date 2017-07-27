@@ -13,6 +13,7 @@
 		5ADDA30C1F24D08800818475 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADDA30A1F24D08800818475 /* Main.storyboard */; };
 		5ADDA30E1F24D08800818475 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ADDA30D1F24D08800818475 /* Assets.xcassets */; };
 		5ADDA3111F24D08800818475 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADDA30F1F24D08800818475 /* LaunchScreen.storyboard */; };
+		5AEAC5C21F29967600013714 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEAC5C11F29967600013714 /* FloatRatingView.swift */; };
 		F452C4EB585FE81F160616F1 /* Pods_savePG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB511BB8BFE5BC964F7E3F3D /* Pods_savePG.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		5ADDA30D1F24D08800818475 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5ADDA3101F24D08800818475 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5ADDA3121F24D08800818475 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5AEAC5C11F29967600013714 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
 		AB511BB8BFE5BC964F7E3F3D /* Pods_savePG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_savePG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F614B710CA266315D0810C32 /* Pods-savePG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-savePG.debug.xcconfig"; path = "Pods/Target Support Files/Pods-savePG/Pods-savePG.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +65,7 @@
 		5ADDA3051F24D08800818475 /* savePG */ = {
 			isa = PBXGroup;
 			children = (
+				5AEAC5C11F29967600013714 /* FloatRatingView.swift */,
 				5A0A372C1F24DA7F004BCA40 /* GoogleService-Info.plist */,
 				5ADDA3061F24D08800818475 /* AppDelegate.swift */,
 				5ADDA3081F24D08800818475 /* ViewController.swift */,
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AEAC5C21F29967600013714 /* FloatRatingView.swift in Sources */,
 				5ADDA3091F24D08800818475 /* ViewController.swift in Sources */,
 				5ADDA3071F24D08800818475 /* AppDelegate.swift in Sources */,
 			);
